@@ -1,0 +1,4 @@
+Place Shivam Mandloi's real PDF resume in this folder as:
+  public/resume.pdf
+
+Once added, set resume.isUploaded = true in src/data/profile.ts.
