@@ -33,15 +33,12 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
     setTilt({ rx: 0, ry: 0, fgx: 0, fgy: 0, mx: 50, my: 50, hover: false });
   };
 
-  const clipInitial =
-    project.motionStyle === 'compliance' ? 'inset(0% 100% 0% 0%)' : 'inset(100% 0% 0% 0%)';
-
   return (
     <motion.article
-      initial={{ opacity: 0.35, y: 28 }}
+      initial={{ opacity: 0.45, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={repeatViewport}
-      transition={{ duration: 0.58, delay: index * 0.08, ease: easeSmooth }}
+      transition={{ duration: 0.55, delay: index * 0.08, ease: easeSmooth }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -59,17 +56,15 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
         className="pointer-events-none absolute inset-0 z-[3] transition-opacity duration-300"
       />
 
-      <motion.div
-        initial={{ clipPath: clipInitial }}
-        whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-        viewport={repeatViewport}
-        transition={{ duration: 0.78, delay: 0.08, ease: easeSmooth }}
-        className="relative aspect-[16/9] w-full overflow-hidden border-b border-[#E5DDD0] bg-forest/5"
-      >
-        <img
+      {/* Always visible (no 100% hidden mask); smooth repeatable scale + opacity entrance */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-[#E5DDD0] bg-forest/5">
+        <motion.img
           src={project.image}
           alt={project.imageAlt}
-          loading="lazy"
+          initial={{ opacity: 0.85, scale: 1.07 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={repeatViewport}
+          transition={{ duration: 0.72, delay: 0.06, ease: easeSmooth }}
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
@@ -102,7 +97,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
         <span className="pointer-events-none absolute left-4 top-4 z-10 rounded-full border border-white/80 bg-ivory/95 px-3.5 py-1 font-mono text-[11px] font-semibold text-forest shadow-sm backdrop-blur-md">
           {project.category}
         </span>
-      </motion.div>
+      </div>
 
       <div className="relative z-10 flex flex-1 flex-col p-6 sm:p-7">
         <h3 className="font-display text-2xl font-bold text-forest">{project.title}</h3>
